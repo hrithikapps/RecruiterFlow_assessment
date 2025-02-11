@@ -6,7 +6,7 @@ import ProductCard from "../ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { addProducts } from "../../utils/productsSlice";
 
-const limit = 12;
+const limit = 13;
 const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
