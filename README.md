@@ -20,12 +20,14 @@ This is a **React-based** e-commerce product listing application that:
 ## Screenshots
 ### 🏠 Landing Page:
 ![Landing Page]
-![Screenshot (414)](https://github.com/user-attachments/assets/e4f01d76-e756-4b27-83ab-a9b02c5b1138)
+![Screenshot (414)](https://github.com/user-attachments/assets/2cd192df-b048-4a14-ac05-83b95c57f0ed)
+
 
 
 ### ✨ Early Return & Spinner:
 ![Shimmer Effect]
-![Screenshot (415)](https://github.com/user-attachments/assets/5614774d-d171-4875-9e7f-5672620c6a0b)
+![Screenshot (415)](https://github.com/user-attachments/assets/b800d876-c374-40ca-92eb-bb77ba30bc3e)
+
 
 
 ## 🚀 Installation
