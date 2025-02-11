@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./style.module.css";
 import MessageBox from "../MessageBox";
 import Spinner from "../Spinner";
@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProducts } from "../../utils/productsSlice";
 
 const Products = () => {
-  // const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.app);
+  const spinnerRef = useRef();
 
   const fetchDataFromAPI = async () => {
     try {
@@ -21,7 +21,6 @@ const Products = () => {
       );
       const res = await resPro.json();
       const products = res.products || [];
-      // setData(products);
       dispatch(addProducts(products));
     } catch (error) {
       setIsError(true);
@@ -51,6 +50,10 @@ const Products = () => {
               id={item.id}
             />
           ))}
+          <div ref={spinnerRef}>
+            {" "}
+            <Spinner text="Loading more products..." />
+          </div>
         </div>
       )}
     </div>
