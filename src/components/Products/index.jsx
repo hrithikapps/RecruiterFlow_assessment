@@ -6,6 +6,7 @@ import ProductCard from "../ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { addProducts } from "../../utils/productsSlice";
 
+const limit = 12;
 const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -13,12 +14,16 @@ const Products = () => {
   const { products } = useSelector((state) => state.app);
   const spinnerRef = useRef();
   const [isIntersecting, setIsIntersecting] = useState(false);
+  const pageRef = useRef(1);
+  const [isSpinnerRefVisible, setIsSpinnerRefVisible] = useState();
 
-  const fetchDataFromAPI = async () => {
+  const fetchDataFromAPI = async (page = pageRef.current) => {
     try {
       setIsLoading(true);
       const resPro = await fetch(
-        "https://dummyjson.com/products?limit=10&skip=10"
+        `https://dummyjson.com/products?limit=${limit}&skip=${
+          (page - 1) * limit
+        }`
       );
       const res = await resPro.json();
       const products = res.products || [];
@@ -53,7 +58,14 @@ const Products = () => {
     }
 
     return () => ref && observer.unobserve(ref);
-  }, [spinnerRef]);
+  }, [isSpinnerRefVisible]);
+
+  useEffect(() => {
+    if (isIntersecting) {
+      fetchDataFromAPI(pageRef.current + 1);
+      pageRef.current = pageRef.current + 1;
+    }
+  }, [isIntersecting]);
 
   return (
     <div className={styles.root}>
@@ -72,7 +84,12 @@ const Products = () => {
               id={item.id}
             />
           ))}
-          <div ref={spinnerRef}>
+          <div
+            ref={(el) => {
+              spinnerRef.current = el;
+              setIsSpinnerRefVisible((prev) => !prev);
+            }}
+          >
             <Spinner text="Loading more products..." />
           </div>
         </div>
