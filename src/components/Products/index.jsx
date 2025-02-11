@@ -12,6 +12,7 @@ const Products = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.app);
   const spinnerRef = useRef();
+  const [isIntersecting, setIsIntersecting] = useState(false);
 
   const fetchDataFromAPI = async () => {
     try {
@@ -32,6 +33,27 @@ const Products = () => {
   useEffect(() => {
     fetchDataFromAPI();
   }, []);
+
+  //Fetch more Products using infinite scrolling
+  useEffect(() => {
+    const ref = spinnerRef.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1,
+      }
+    );
+
+    if (ref) {
+      observer.observe(ref);
+    }
+
+    return () => observer.unobserve(ref);
+  }, [spinnerRef]);
 
   return (
     <div className={styles.root}>
