@@ -52,7 +52,7 @@ const Products = () => {
       observer.observe(ref);
     }
 
-    return () => observer.unobserve(ref);
+    return () => ref && observer.unobserve(ref);
   }, [spinnerRef]);
 
   return (
@@ -73,7 +73,6 @@ const Products = () => {
             />
           ))}
           <div ref={spinnerRef}>
-            {" "}
             <Spinner text="Loading more products..." />
           </div>
         </div>
